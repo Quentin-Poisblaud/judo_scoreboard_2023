@@ -1,47 +1,44 @@
 <template>
+  <h1>Parent</h1>
 
-    <h1>Parent</h1>
+  <div v-if="!portChoosed">
+    <!-- <input v-model="port" /> -->
+    <button @click="ouvrirNouvelleFenetre">ouvrir enfant</button>
+  </div>
 
-    <div v-if="!portChoosed">
-      <!-- <input v-model="port" /> -->
-      <button @click="ouvrirNouvelleFenetre">ouvrir enfant</button>
+  <div v-else>
+    <input v-model="messageSend" />
+    <button @click="sendData">envoyer data</button>
+    <br />
+
+    {{ messageRecieved }}
+
+    <div>
+      <button @click="kill">kill</button>
     </div>
-
-    <div v-else>
-      <input v-model="messageSend" />
-      <button @click="sendData">envoyer data</button>
-      <br />
-
-      {{ messageRecieved }}
-
-      <div>
-        <button @click="kill">kill</button>
-      </div>
-    </div>
+  </div>
 
   <router-view></router-view>
 </template>
 
 <script>
-
-const options = 'width=800,height=600'
+const options = "width=800,height=600"
 var nouvelleFenetre
 
 export default {
-
   data() {
     return {
-      port: '',
+      port: "",
       portChoosed: false,
-      messageSend: '',
-      messageRecieved: '',
-      childLink: ''
+      messageSend: "",
+      messageRecieved: "",
+      childLink: "",
     }
   },
   created() {
-    var tmp=window.origin
-    var lul =tmp.substring(tmp.indexOf('://')+3)
-    this.port=lul.substring(lul.indexOf(':')+1)
+    var tmp = window.origin
+    var lul = tmp.substring(tmp.indexOf("://") + 3)
+    this.port = lul.substring(lul.indexOf(":") + 1)
     // window.addEventListener('message', (event) => {
     //   const donnees = event.data
     //   if (donnees.link) {
@@ -57,11 +54,11 @@ export default {
   computed: {
     datas() {
       return { message: this.messageSend }
-    }
+    },
   },
   methods: {
     createListen() {
-      window.addEventListener('message', (event) => {
+      window.addEventListener("message", (event) => {
         if (event.origin === this.childLink) {
           const donnees = event.data
           if (donnees.kill) this.kill()
@@ -73,15 +70,15 @@ export default {
       this.messageRecieved = donnees.message
     },
     sendData() {
-      nouvelleFenetre.postMessage(this.datas, '*')
+      nouvelleFenetre.postMessage(this.datas, "*")
     },
 
     ouvrirNouvelleFenetre() {
-      this.childLink = 'http://localhost:' + this.port
+      this.childLink = "http://localhost:" + this.port
       this.portChoosed = true
-      nouvelleFenetre = window.open(this.childLink + '/e/', '_blank', options)
+      nouvelleFenetre = window.open(this.childLink + "/e/", "_blank", options)
       setTimeout(() => {
-        nouvelleFenetre.postMessage({ link: true }, '*')
+        nouvelleFenetre.postMessage({ link: true }, "*")
       }, 1000)
       this.createListen()
     },
@@ -90,11 +87,11 @@ export default {
       nouvelleFenetre.close()
       //this.port = ''
       this.portChoosed = false
-      this.messageSend = ''
-      this.messageRecieved = ''
-      this.childLink = ''
-    }
-  }
+      this.messageSend = ""
+      this.messageRecieved = ""
+      this.childLink = ""
+    },
+  },
 }
 </script>
-<style lang="scss" scoped></style>
+<style scoped></style>

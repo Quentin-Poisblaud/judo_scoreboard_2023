@@ -1,67 +1,174 @@
 <template>
-  
-    <h1>Enfant</h1>
-
-    <!-- <div v-if="!portChoosed">
-      <input v-model="port" />
-      <button @click="ouvrirNouvelleFenetre">ouvrir enfant</button>
-    </div> -->
-
-    <div>
-      <input v-model="messageSend" />
-      <button @click="sendData">envoyer data</button>
-      <br />
-
-      {{ messageRecieved }}
-
-      <!-- <div>
-        <button @click="kill">kill</button>
-      </div> -->
+  <div style="background-color: red; color: white; height: 37.5vh; margin: 0">
+    <!--Combattant-->
+    <div class="player">
+      <div v-if="girouetteTimer" style="height: 100%">
+        <div class="style" style="height: 50%">
+          {{ player1.nom.toUpperCase() }}
+        </div>
+        <div class="style" style="height: 50%">{{ player1.prenom }}</div>
+      </div>
+      <div v-else style="height: 100%">
+        <div class="style" style="height: 100%">{{ player1.club }}</div>
+      </div>
     </div>
-  
-  <router-view></router-view>
+
+    <!--Score-->
+    <div class="score">
+      <div class="style">
+        {{ player1.score.ippon }} <a style="padding-inline: 7%"></a>
+        {{ player1.score.waza }} <a style="padding-inline: 7%"></a>
+        {{ ("0" + player1.score.kinza).slice(-2) }}
+      </div>
+    </div>
+
+    <!--Pénalitées-->
+    <div
+      style="width: 8%; height: 100%; float: left"
+      v-if="player1.shido === -1"
+      class="hansokumake">
+      <div class="showed">H</div>
+    </div>
+    <div style="width: 8%; height: 100%; float: left" v-else>
+      <div class="shido">
+        <div class="showed" v-show="player1.shido >= 3">S3</div>
+      </div>
+      <div class="shido">
+        <div class="showed" v-show="player1.shido >= 2">S2</div>
+      </div>
+      <div class="shido">
+        <div class="showed" v-show="player1.shido >= 1">S1</div>
+      </div>
+    </div>
+  </div>
+
+  <div style="background-color: white; color: black; height: 37.5vh; margin: 0">
+    <!--Combattant-->
+    <div class="player">
+      <div v-if="girouetteTimer" style="height: 100%">
+        <div class="style" style="height: 50%">
+          {{ player2.nom.toUpperCase() }}
+        </div>
+        <div class="style" style="height: 50%">{{ player2.prenom }}</div>
+      </div>
+      <div v-else style="height: 100%">
+        <div class="style" style="height: 100%">{{ player2.club }}</div>
+      </div>
+    </div>
+
+    <!--Score-->
+    <div class="score">
+      <div class="style">
+        {{ player2.score.ippon }} <a style="padding-inline: 7%"></a>
+        {{ player2.score.waza }} <a style="padding-inline: 7%"></a>
+        {{ ("0" + player2.score.kinza).slice(-2) }}
+      </div>
+    </div>
+
+    <!--Pénalitées-->
+    <div
+      style="width: 8%; height: 100%; float: left"
+      v-if="player2.shido === -1"
+      class="hansokumake">
+      <div class="showed">H</div>
+    </div>
+    <div style="width: 8%; height: 100%; float: left" v-else>
+      <div class="shido">
+        <div class="showed" v-show="player2.shido >= 3">S3</div>
+      </div>
+      <div class="shido">
+        <div class="showed" v-show="player2.shido >= 2">S2</div>
+      </div>
+      <div class="shido">
+        <div class="showed" v-show="player2.shidoshido >= 1">S1</div>
+      </div>
+    </div>
+  </div>
+
+  <div style="background-color: black; height: 25vh; margin: 0">
+    <div style="color: white; text-align: center">
+      {{ ("0" + Math.trunc(this.timer / 60)).slice(-2) }} :
+      {{ ("0" + (this.timer % 60)).slice(-2) }}
+    </div>
+  </div>
 </template>
 
 <script>
-
 // const options = 'width=800,height=600'
 // var nouvelleFenetre
 
 export default {
-
   data() {
     return {
+      player1: {
+        nom: "Poisblaud",
+        prenom: "Quentin",
+        club: "2LJC",
+        shido: 1, //-1 = H ; 1 à 3 = nb Shido
+        score: {
+          ippon: 0,
+          waza: 0,
+          kinza: 0,
+        },
+      },
+
+      player2: {
+        nom: "Dupond",
+        prenom: "Hyve",
+        club: "PCO",
+        shido: -1, //-1 = H ; 1 à 3 = nb Shido
+        score: {
+          ippon: 2,
+          waza: 3,
+          kinza: 12,
+        },
+      },
+
+      girouetteTimer: true,
+
+      timer: 300, //temps en secondes
+
       // port: '',
       // portChoosed: false,
-      messageSend: '',
-      messageRecieved: '',
-      parentLink: ''
+      messageSend: "",
+      messageRecieved: "",
+      parentLink: "",
     }
   },
   created() {
+    this.changeGirouetteTimerStatus()
     // var tmp=window.origin
     // var lul =tmp.substring(tmp.indexOf('://')+3)
     // this.port=lul.substring(lul.indexOf(':')+1)
-    window.addEventListener('message', (event) => {
+    window.addEventListener("message", (event) => {
       const donnees = event.data
       if (donnees.link) {
         this.parentLink = event.origin
         this.createListen()
       }
     })
-    window.addEventListener('beforeunload', () => {
-      window.opener.postMessage({ kill: true }, '*')
+    window.addEventListener("beforeunload", () => {
+      window.opener.postMessage({ kill: true }, "*")
     })
   },
 
   computed: {
     datas() {
       return { message: this.messageSend }
-    }
+    },
   },
   methods: {
+    changeGirouetteTimerStatus() {
+      this.girouetteTimer = true
+      setTimeout(() => {
+        this.girouetteTimer = false
+        setTimeout(() => {
+          this.changeGirouetteTimerStatus()
+        }, 2000)
+      }, 3000)
+    },
     createListen() {
-      window.addEventListener('message', (event) => {
+      window.addEventListener("message", (event) => {
         if (event.origin === this.parentLink) {
           const donnees = event.data
           // if (donnees.kill) this.kill()
@@ -73,8 +180,8 @@ export default {
       this.messageRecieved = donnees.message
     },
     sendData() {
-      window.opener.postMessage(this.datas, '*')
-    }
+      window.opener.postMessage(this.datas, "*")
+    },
 
     // ouvrirNouvelleFenetre() {
     //   this.childLink = 'http://localhost:' + this.port
@@ -94,7 +201,69 @@ export default {
     //   this.messageRecieved = ''
     //   this.childLink = ''
     // }
-  }
+  },
 }
 </script>
-<style lang="scss" scoped></style>
+<style scoped>
+.player {
+  width: 40%;
+  height: 100%;
+  float: left;
+
+  .style {
+    width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    display: flex;
+    align-items: center;
+    font-size: 5em;
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: 700;
+    padding-left: 10%;
+  }
+}
+.score {
+  width: 52%;
+  height: 100%;
+  float: left;
+  .style {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    font-size: 10em;
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: 700;
+    padding-left: 10%;
+  }
+}
+.shido {
+  height: calc(100% / 3);
+  color: black;
+  .showed {
+    display: flex;
+    height: calc(100% - 4px);
+    background-color: yellow;
+    align-items: center;
+    justify-content: center;
+    font-size: 2em;
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: 700;
+    border: 2px solid black;
+  }
+}
+.hansokumake {
+  .showed {
+    display: flex;
+    height: calc(100% - 4px);
+    background-color: red;
+    align-items: center;
+    justify-content: center;
+    font-size: 3em;
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: 700;
+    border: 2px solid black;
+    color: white;
+  }
+}
+</style>
