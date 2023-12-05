@@ -1,3 +1,13 @@
+# judo scoreboard 2023
+
+pour lancer le projet :
+```sh
+git clone https://github.com/Quentin-Poisblaud/judo_scoreboard_2023.git
+npm install
+npm run dev
+```
+
+
 # tmp
 
 This template should help get you started developing with Vue 3 in Vite.
