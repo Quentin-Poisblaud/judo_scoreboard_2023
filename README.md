@@ -3,6 +3,7 @@
 pour lancer le projet :
 ```sh
 git clone https://github.com/Quentin-Poisblaud/judo_scoreboard_2023.git
+cd judo_scoreboard_2023
 npm install
 npm run dev
 ```
