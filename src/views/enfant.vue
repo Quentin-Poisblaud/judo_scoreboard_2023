@@ -3,10 +3,12 @@
     <!--Combattant-->
     <div class="player">
       <div v-if="girouetteTimer" style="height: 100%">
-        <div class="style" style="height: 50%">
-          {{ player1.nom.toUpperCase() }}
+        <div class="style" style="height: 100%">
+          <pre style="font-family: Arial, Helvetica, sans-serif"
+            >{{ player1.nom.toUpperCase() }}
+{{ player1.prenom }}</pre
+          >
         </div>
-        <div class="style" style="height: 50%">{{ player1.prenom }}</div>
       </div>
       <div v-else style="height: 100%">
         <div class="style" style="height: 100%">{{ player1.club }}</div>
@@ -46,10 +48,12 @@
     <!--Combattant-->
     <div class="player">
       <div v-if="girouetteTimer" style="height: 100%">
-        <div class="style" style="height: 50%">
-          {{ player2.nom.toUpperCase() }}
+        <div class="style" style="height: 100%">
+          <pre style="font-family: Arial, Helvetica, sans-serif"
+            >{{ player2.nom.toUpperCase() }}
+{{ player2.prenom }}</pre
+          >
         </div>
-        <div class="style" style="height: 50%">{{ player2.prenom }}</div>
       </div>
       <div v-else style="height: 100%">
         <div class="style" style="height: 100%">{{ player2.club }}</div>
@@ -86,9 +90,80 @@
   </div>
 
   <div style="background-color: black; height: 25vh; margin: 0">
-    <div style="color: white; text-align: center">
-      {{ ("0" + Math.trunc(this.timer / 60)).slice(-2) }} :
-      {{ ("0" + (this.timer % 60)).slice(-2) }}
+    <div
+      style="
+        color: white;
+        text-align: center;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 30%;
+        height: 100%;
+        float: left;
+      ">
+      <div
+        style="
+          margin: 0;
+          font-family: Arial, Helvetica, sans-serif;
+          font-weight: 700;
+          font-size: 2vw;
+        ">
+        <div v-for="item in infos">{{ item }}</div>
+      </div>
+    </div>
+
+    <div
+      style="
+        text-align: center;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 40%;
+        height: 100%;
+        float: left;
+        font-family: Arial, Helvetica, sans-serif;
+        font-weight: 700;
+        font-size: 12vw;
+      ">
+      <a style="color: gold" v-if="timerStatus === 2">
+        {{ ("0" + Math.trunc(this.timer / 60)).slice(-2) }}:{{
+          ("0" + (this.timer % 60)).slice(-2)
+        }}
+      </a>
+      <a style="color: lime" v-else-if="timerStatus === 1">
+        {{ ("0" + Math.trunc(this.timer / 60)).slice(-2) }}:{{
+          ("0" + (this.timer % 60)).slice(-2)
+        }}
+      </a>
+      <a style="color: red" v-else>
+        {{ ("0" + Math.trunc(this.timer / 60)).slice(-2) }}:{{
+          ("0" + (this.timer % 60)).slice(-2)
+        }}
+      </a>
+    </div>
+    <div
+      style="
+        color: white;
+        text-align: center;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 30%;
+        height: 100%;
+        float: left;
+      ">
+      <div
+        style="
+          margin: 0;
+          font-family: Arial, Helvetica, sans-serif;
+          font-weight: 700;
+          font-size: 2vw;
+        ">
+        <div>Se prépare :</div>
+        <div v-for="item in nexts">
+          {{ item.nom.toUpperCase() }} {{ item.prenom }} - {{ item.club }}
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -124,9 +199,27 @@ export default {
         },
       },
 
-      girouetteTimer: true,
-
       timer: 300, //temps en secondes
+
+      timerStatus: 2, //0=mate, 1 hajime, 2 goldenScore
+
+      infos: ["Tournoi de Pouzauges", "Benjamins", "Poussins", "Mini-poussins"],
+
+      nexts: [
+        {
+          nom: "Poisblaud",
+          prenom: "Quentin",
+          club: "2LJC",
+        },
+
+        {
+          nom: "Dupond",
+          prenom: "Hyve",
+          club: "PCO",
+        },
+      ],
+
+      girouetteTimer: true,
 
       // port: '',
       // portChoosed: false,
@@ -217,7 +310,7 @@ export default {
     white-space: nowrap;
     display: flex;
     align-items: center;
-    font-size: 5em;
+    font-size: 6vw;
     font-family: Arial, Helvetica, sans-serif;
     font-weight: 700;
     padding-left: 10%;
@@ -231,7 +324,7 @@ export default {
     height: 100%;
     display: flex;
     align-items: center;
-    font-size: 10em;
+    font-size: 13vw;
     font-family: Arial, Helvetica, sans-serif;
     font-weight: 700;
     padding-left: 10%;
@@ -246,7 +339,7 @@ export default {
     background-color: yellow;
     align-items: center;
     justify-content: center;
-    font-size: 2em;
+    font-size: 3vw;
     font-family: Arial, Helvetica, sans-serif;
     font-weight: 700;
     border: 2px solid black;
@@ -259,7 +352,7 @@ export default {
     background-color: red;
     align-items: center;
     justify-content: center;
-    font-size: 3em;
+    font-size: 5vw;
     font-family: Arial, Helvetica, sans-serif;
     font-weight: 700;
     border: 2px solid black;
