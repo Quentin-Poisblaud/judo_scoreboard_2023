@@ -84,7 +84,7 @@
         <div class="showed" v-show="player2.shido >= 2">S2</div>
       </div>
       <div class="shido">
-        <div class="showed" v-show="player2.shidoshido >= 1">S1</div>
+        <div class="showed" v-show="player2.shido >= 1">S1</div>
       </div>
     </div>
   </div>
@@ -169,9 +169,6 @@
 </template>
 
 <script>
-// const options = 'width=800,height=600'
-// var nouvelleFenetre
-
 export default {
   data() {
     return {
@@ -221,18 +218,11 @@ export default {
 
       girouetteTimer: true,
 
-      // port: '',
-      // portChoosed: false,
-      messageSend: "",
-      messageRecieved: "",
       parentLink: "",
     }
   },
   created() {
     this.changeGirouetteTimerStatus()
-    // var tmp=window.origin
-    // var lul =tmp.substring(tmp.indexOf('://')+3)
-    // this.port=lul.substring(lul.indexOf(':')+1)
     window.addEventListener("message", (event) => {
       const donnees = event.data
       if (donnees.link) {
@@ -270,33 +260,15 @@ export default {
       })
     },
     traitement(donnees) {
-      this.messageRecieved = donnees.message
+      if (true) {
+        this.player1 = donnees.player1
+        this.player2 = donnees.player2
+      }
     },
-    sendData() {
-      window.opener.postMessage(this.datas, "*")
-    },
-
-    // ouvrirNouvelleFenetre() {
-    //   this.childLink = 'http://localhost:' + this.port
-    //   this.portChoosed = true
-    //   nouvelleFenetre = window.open(this.childLink + '/e/', '_blank', options)
-    //   setTimeout(() => {
-    //     nouvelleFenetre.postMessage({ link: true }, '*')
-    //   }, 1000)
-    //   this.createListen()
-    // },
-
-    // kill() {
-    //   nouvelleFenetre.close()
-    //   this.port = ''
-    //   this.portChoosed = false
-    //   this.messageSend = ''
-    //   this.messageRecieved = ''
-    //   this.childLink = ''
-    // }
   },
 }
 </script>
+
 <style scoped>
 .player {
   width: 40%;
@@ -349,7 +321,7 @@ export default {
   .showed {
     display: flex;
     height: calc(100% - 4px);
-    background-color: red;
+    background-color: orangered;
     align-items: center;
     justify-content: center;
     font-size: 5vw;
