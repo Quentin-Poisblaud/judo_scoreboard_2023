@@ -1,3 +1,6 @@
+<!--TODO: améliorer la lisibilitée du HTML et CSS-->
+<!--NOTES: utiliser des composants pourrait GRANDEMENT simplifier cela-->
+
 <template>
   <div style="background-color: red; color: white; height: 37.5vh; margin: 0">
     <!--Combattant-->
@@ -173,10 +176,10 @@ export default {
   data() {
     return {
       player1: {
-        nom: "Poisblaud",
-        prenom: "Quentin",
-        club: "2LJC",
-        shido: 1, //-1 = H ; 1 à 3 = nb Shido
+        nom: "Combatant",
+        prenom: "n° 1",
+        club: "FRA",
+        shido: 0, //-1 = H ; 1 à 3 = nb Shido
         score: {
           ippon: 0,
           waza: 0,
@@ -185,34 +188,34 @@ export default {
       },
 
       player2: {
-        nom: "Dupond",
-        prenom: "Hyve",
-        club: "PCO",
-        shido: -1, //-1 = H ; 1 à 3 = nb Shido
+        nom: "Combatant",
+        prenom: "n° 2",
+        club: "FRA",
+        shido: 0, //-1 = H ; 1 à 3 = nb Shido
         score: {
-          ippon: 2,
-          waza: 3,
-          kinza: 12,
+          ippon: 0,
+          waza: 0,
+          kinza: 0,
         },
       },
 
       timer: 300, //temps en secondes
 
-      timerStatus: 2, //0=mate, 1 hajime, 2 goldenScore
+      timerStatus: 0, //0=mate, 1 hajime, 2 goldenScore
 
-      infos: ["Tournoi de Pouzauges", "Benjamins", "Poussins", "Mini-poussins"],
+      infos: ["Tournoi du", "2 Lays Judo Chatonnay", "Toutes catégories"],
 
       nexts: [
         {
-          nom: "Poisblaud",
-          prenom: "Quentin",
-          club: "2LJC",
+          nom: "",
+          prenom: "",
+          club: "",
         },
 
         {
-          nom: "Dupond",
-          prenom: "Hyve",
-          club: "PCO",
+          nom: "",
+          prenom: "",
+          club: "",
         },
       ],
 
@@ -222,25 +225,41 @@ export default {
     }
   },
   created() {
+    //on initialise la girouette
     this.changeGirouetteTimerStatus()
+
+    /**
+     * définit l'adresse du parent
+     */
     window.addEventListener("message", (event) => {
       const donnees = event.data
       if (donnees.link) {
         this.parentLink = event.origin
-        this.createListen()
       }
     })
+
+    /**
+     * écoute des datas du parent
+     */
+    window.addEventListener("message", (event) => {
+      if (event.origin === this.parentLink) {
+        const donnees = event.data
+        this.traitement(donnees)
+      }
+    })
+
+    /**
+     * envoie au parent un faire part de décès
+     */
     window.addEventListener("beforeunload", () => {
       window.opener.postMessage({ kill: true }, "*")
     })
   },
 
-  computed: {
-    datas() {
-      return { message: this.messageSend }
-    },
-  },
   methods: {
+    /**
+     * Change le statut de la girouette Nom Prénom / Club selon un patern régulier
+     */
     changeGirouetteTimerStatus() {
       this.girouetteTimer = true
       setTimeout(() => {
@@ -250,19 +269,20 @@ export default {
         }, 2000)
       }, 3000)
     },
-    createListen() {
-      window.addEventListener("message", (event) => {
-        if (event.origin === this.parentLink) {
-          const donnees = event.data
-          // if (donnees.kill) this.kill()
-          this.traitement(donnees)
-        }
-      })
-    },
+
+    /**
+     * Attribue les données reçu de la page parent au variables locales pour l'affichage
+     *
+     * @param donnees
+     */
     traitement(donnees) {
-      if (true) {
+      if (donnees.player1 !== undefined) {
         this.player1 = donnees.player1
         this.player2 = donnees.player2
+        this.timer = donnees.timer
+        this.timerStatus = donnees.timerStatus
+        this.infos = donnees.infos
+        this.nexts = donnees.nexts
       }
     },
   },

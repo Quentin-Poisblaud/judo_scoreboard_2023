@@ -10,9 +10,9 @@
       <h3>Combatant 1</h3>
       <h4>
         Nom <input v-model="nom1" @change="sendData" /> Prénom
-        <input v-model="prenom1" @change="sendData" />
+        <input v-model="prenom1" @change="sendData" /> Club
+        <input v-model="club1" @change="sendData" />
       </h4>
-      <h4>Club <input v-model="club1" @change="sendData" /></h4>
       I
       <input
         type="number"
@@ -43,9 +43,9 @@
       <h3>Combatant 2</h3>
       <h4>
         Nom <input v-model="nom2" @change="sendData" /> Prénom
-        <input v-model="prenom2" @change="sendData" />
+        <input v-model="prenom2" @change="sendData" /> Club
+        <input v-model="club2" @change="sendData" />
       </h4>
-      <h4>Club <input v-model="club2" @change="sendData" /></h4>
       I
       <input
         type="number"
@@ -72,7 +72,44 @@
           @change="sendData" />
       </div>
     </div>
-
+    <div>
+      <a>
+        <textarea
+          v-model="infos"
+          @change="sendData"
+          style="width: 25vw; height: 12vh" />
+      </a>
+      <a>
+        <input type="number" min="0" v-model="timerM" @change="sendData" />
+        <input
+          type="number"
+          min="0"
+          max="59"
+          v-model="timerS"
+          @change="sendData" />
+        <input
+          type="number"
+          min="0"
+          max="2"
+          v-model="timerStatus"
+          @change="sendData" />
+      </a>
+      <a>
+        <h4>Se prépare</h4>
+        <div>
+          <input v-model="sp1name" style="width: 15vw" @change="sendData" />
+          <input v-model="sp1surname" style="width: 15vw" @change="sendData" />
+          -
+          <input v-model="sp1club" style="width: 10vw" @change="sendData" />
+        </div>
+        <div>
+          <input v-model="sp2name" style="width: 15vw" @change="sendData" />
+          <input v-model="sp2surname" style="width: 15vw" @change="sendData" />
+          -
+          <input v-model="sp2club" style="width: 10vw" @change="sendData" />
+        </div>
+      </a>
+    </div>
     <div>
       <br /><br /><br />
       <button @click="kill">kill</button>
@@ -92,7 +129,7 @@ export default {
       //datas player 1
       nom1: "Combatant",
       prenom1: "n° 1",
-      club1: "FR",
+      club1: "FRA",
       shido1: 0,
       ippon1: 0,
       waza1: 0,
@@ -101,11 +138,26 @@ export default {
       //datas player 2
       nom2: "Combatant",
       prenom2: "n° 2",
-      club2: "FR",
+      club2: "FRA",
       shido2: 0,
       ippon2: 0,
       waza2: 0,
       kinza2: 0,
+
+      timerM: 5,
+      timerS: 0,
+
+      timerStatus: 0,
+
+      infos: "Tournoi du\n2 Lays Judo Chantonnay\nToutes catégories",
+
+      sp1name: "",
+      sp1surname: "",
+      sp1club: "",
+
+      sp2name: "",
+      sp2surname: "",
+      sp2club: "",
 
       //variables de fonctionnement
       port: "",
@@ -121,29 +173,6 @@ export default {
     this.port = tmp.substring(tmp.indexOf(":") + 1)
   },
 
-  computed: {
-    //datas envoyées vers la page fils
-    datas() {
-      return {
-        player1: {
-          nom: this.nom1,
-          prenom: this.prenom1,
-          club: this.club1,
-          shido: this.shido1,
-          score: { ippon: this.ippon1, waza: this.waza1, kinza: this.kinza1 },
-        },
-        player2: {
-          nom: this.nom2,
-          prenom: this.prenom2,
-          club: this.club2,
-          shido: this.shido2,
-          score: { ippon: this.ippon2, waza: this.waza2, kinza: this.kinza2 },
-        },
-
-        //TODO: ajouter la gestion du timer, infos et se prépare
-      }
-    },
-  },
   methods: {
     createListen() {
       window.addEventListener("message", (event) => {
@@ -176,6 +205,43 @@ export default {
 
     sendData() {
       nouvelleFenetre.postMessage(this.datas, "*")
+    },
+  },
+
+  computed: {
+    timer() {
+      return this.timerM * 60 + this.timerS
+    },
+
+    //datas envoyées vers la page fils
+    datas() {
+      return {
+        player1: {
+          nom: this.nom1,
+          prenom: this.prenom1,
+          club: this.club1,
+          shido: this.shido1,
+          score: { ippon: this.ippon1, waza: this.waza1, kinza: this.kinza1 },
+        },
+        player2: {
+          nom: this.nom2,
+          prenom: this.prenom2,
+          club: this.club2,
+          shido: this.shido2,
+          score: { ippon: this.ippon2, waza: this.waza2, kinza: this.kinza2 },
+        },
+
+        timer: this.timer,
+
+        timerStatus: this.timerStatus,
+
+        infos: this.infos.split("\n"),
+
+        nexts: [
+          { nom: this.sp1name, prenom: this.sp1surname, club: this.sp1club },
+          { nom: this.sp2name, prenom: this.sp2surname, club: this.sp2club },
+        ],
+      }
     },
   },
 }
