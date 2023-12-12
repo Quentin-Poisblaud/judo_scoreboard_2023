@@ -5,17 +5,12 @@
   <div style="background-color: red; color: white; height: 37.5vh; margin: 0">
     <!--Combattant-->
     <div class="player">
-      <div v-if="girouetteTimer" style="height: 100%">
-        <div class="style" style="height: 100%">
-          <pre style="font-family: Arial, Helvetica, sans-serif"
-            >{{ player1.nom.toUpperCase() }}
-{{ player1.prenom }}</pre
-          >
-        </div>
-      </div>
-      <div v-else style="height: 100%">
-        <div class="style" style="height: 100%">{{ player1.club }}</div>
-      </div>
+      <nameAndClub
+        :background_color="'red'"
+        :font_color="'white'"
+        :name="player1.nom"
+        :surname="player1.prenom"
+        :club="player1.club" />
     </div>
 
     <!--Score-->
@@ -50,17 +45,12 @@
   <div style="background-color: white; color: black; height: 37.5vh; margin: 0">
     <!--Combattant-->
     <div class="player">
-      <div v-if="girouetteTimer" style="height: 100%">
-        <div class="style" style="height: 100%">
-          <pre style="font-family: Arial, Helvetica, sans-serif"
-            >{{ player2.nom.toUpperCase() }}
-{{ player2.prenom }}</pre
-          >
-        </div>
-      </div>
-      <div v-else style="height: 100%">
-        <div class="style" style="height: 100%">{{ player2.club }}</div>
-      </div>
+      <nameAndClub
+        :background_color="'white'"
+        :font_color="'black'"
+        :name="player2.nom"
+        :surname="player2.prenom"
+        :club="player2.club" />
     </div>
 
     <!--Score-->
@@ -172,6 +162,8 @@
 </template>
 
 <script>
+import nameAndClub from "../components/nameAndClub.vue"
+
 export default {
   data() {
     return {
@@ -219,15 +211,13 @@ export default {
         },
       ],
 
-      girouetteTimer: true,
-
       parentLink: "",
     }
   },
+  components: {
+    nameAndClub,
+  },
   created() {
-    //on initialise la girouette
-    this.changeGirouetteTimerStatus()
-
     /**
      * définit l'adresse du parent
      */
@@ -258,19 +248,6 @@ export default {
 
   methods: {
     /**
-     * Change le statut de la girouette Nom Prénom / Club selon un patern régulier
-     */
-    changeGirouetteTimerStatus() {
-      this.girouetteTimer = true
-      setTimeout(() => {
-        this.girouetteTimer = false
-        setTimeout(() => {
-          this.changeGirouetteTimerStatus()
-        }, 2000)
-      }, 3000)
-    },
-
-    /**
      * Attribue les données reçu de la page parent au variables locales pour l'affichage
      *
      * @param donnees
@@ -294,19 +271,6 @@ export default {
   width: 40%;
   height: 100%;
   float: left;
-
-  .style {
-    width: 100%;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    display: flex;
-    align-items: center;
-    font-size: 6vw;
-    font-family: Arial, Helvetica, sans-serif;
-    font-weight: 700;
-    padding-left: 10%;
-  }
 }
 .score {
   width: 52%;
