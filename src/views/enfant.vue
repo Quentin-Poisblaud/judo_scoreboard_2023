@@ -14,12 +14,11 @@
     </div>
 
     <!--Score-->
-    <div class="score">
-      <div class="style">
-        {{ player1.score.ippon }} <a style="padding-inline: 7%"></a>
-        {{ player1.score.waza }} <a style="padding-inline: 7%"></a>
-        {{ ("0" + player1.score.kinza).slice(-2) }}
-      </div>
+    <div style="width: 52%; height: 100%; float: left">
+      <score
+        :background_color="'red'"
+        :font_color="'white'"
+        :score="player1.score" />
     </div>
 
     <!--Pénalitées-->
@@ -40,12 +39,11 @@
     </div>
 
     <!--Score-->
-    <div class="score">
-      <div class="style">
-        {{ player2.score.ippon }} <a style="padding-inline: 7%"></a>
-        {{ player2.score.waza }} <a style="padding-inline: 7%"></a>
-        {{ ("0" + player2.score.kinza).slice(-2) }}
-      </div>
+    <div style="width: 52%; height: 100%; float: left">
+      <score
+        :background_color="'white'"
+        :font_color="'black'"
+        :score="player2.score" />
     </div>
 
     <!--Pénalitées-->
@@ -135,6 +133,7 @@
 
 <script>
 import nameAndClub from "../components/nameAndClub.vue"
+import score from "../components/score.vue"
 import penalties from "../components/penalties.vue"
 
 export default {
@@ -189,6 +188,7 @@ export default {
   },
   components: {
     nameAndClub,
+    score,
     penalties,
   },
 
@@ -241,19 +241,4 @@ export default {
 }
 </script>
 
-<style scoped>
-.score {
-  width: 52%;
-  height: 100%;
-  float: left;
-  .style {
-    height: 100%;
-    display: flex;
-    align-items: center;
-    font-size: 13vw;
-    font-family: Arial, Helvetica, sans-serif;
-    font-weight: 700;
-    padding-left: 10%;
-  }
-}
-</style>
+<style scoped></style>
