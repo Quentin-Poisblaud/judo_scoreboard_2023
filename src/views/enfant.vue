@@ -4,7 +4,7 @@
 <template>
   <div style="background-color: red; color: white; height: 37.5vh; margin: 0">
     <!--Combattant-->
-    <div class="player">
+    <div style="width: 40%; height: 100%; float: left">
       <nameAndClub
         :background_color="'red'"
         :font_color="'white'"
@@ -23,28 +23,14 @@
     </div>
 
     <!--Pénalitées-->
-    <div
-      style="width: 8%; height: 100%; float: left"
-      v-if="player1.shido === -1"
-      class="hansokumake">
-      <div class="showed">H</div>
-    </div>
-    <div style="width: 8%; height: 100%; float: left" v-else>
-      <div class="shido">
-        <div class="showed" v-show="player1.shido >= 3">S3</div>
-      </div>
-      <div class="shido">
-        <div class="showed" v-show="player1.shido >= 2">S2</div>
-      </div>
-      <div class="shido">
-        <div class="showed" v-show="player1.shido >= 1">S1</div>
-      </div>
+    <div style="width: 8%; height: 100%; float: left">
+      <penalties :background_color="'red'" :penalties="player1.shido" />
     </div>
   </div>
 
   <div style="background-color: white; color: black; height: 37.5vh; margin: 0">
     <!--Combattant-->
-    <div class="player">
+    <div style="width: 40%; height: 100%; float: left">
       <nameAndClub
         :background_color="'white'"
         :font_color="'black'"
@@ -63,22 +49,8 @@
     </div>
 
     <!--Pénalitées-->
-    <div
-      style="width: 8%; height: 100%; float: left"
-      v-if="player2.shido === -1"
-      class="hansokumake">
-      <div class="showed">H</div>
-    </div>
-    <div style="width: 8%; height: 100%; float: left" v-else>
-      <div class="shido">
-        <div class="showed" v-show="player2.shido >= 3">S3</div>
-      </div>
-      <div class="shido">
-        <div class="showed" v-show="player2.shido >= 2">S2</div>
-      </div>
-      <div class="shido">
-        <div class="showed" v-show="player2.shido >= 1">S1</div>
-      </div>
+    <div style="width: 8%; height: 100%; float: left">
+      <penalties :background_color="'white'" :penalties="player2.shido" />
     </div>
   </div>
 
@@ -163,6 +135,7 @@
 
 <script>
 import nameAndClub from "../components/nameAndClub.vue"
+import penalties from "../components/penalties.vue"
 
 export default {
   data() {
@@ -216,7 +189,9 @@ export default {
   },
   components: {
     nameAndClub,
+    penalties,
   },
+
   created() {
     /**
      * définit l'adresse du parent
@@ -267,11 +242,6 @@ export default {
 </script>
 
 <style scoped>
-.player {
-  width: 40%;
-  height: 100%;
-  float: left;
-}
 .score {
   width: 52%;
   height: 100%;
@@ -284,35 +254,6 @@ export default {
     font-family: Arial, Helvetica, sans-serif;
     font-weight: 700;
     padding-left: 10%;
-  }
-}
-.shido {
-  height: calc(100% / 3);
-  color: black;
-  .showed {
-    display: flex;
-    height: calc(100% - 4px);
-    background-color: yellow;
-    align-items: center;
-    justify-content: center;
-    font-size: 3vw;
-    font-family: Arial, Helvetica, sans-serif;
-    font-weight: 700;
-    border: 2px solid black;
-  }
-}
-.hansokumake {
-  .showed {
-    display: flex;
-    height: calc(100% - 4px);
-    background-color: orangered;
-    align-items: center;
-    justify-content: center;
-    font-size: 5vw;
-    font-family: Arial, Helvetica, sans-serif;
-    font-weight: 700;
-    border: 2px solid black;
-    color: white;
   }
 }
 </style>
