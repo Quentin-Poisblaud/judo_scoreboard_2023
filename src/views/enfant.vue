@@ -54,7 +54,7 @@ export default {
 
       timerStatus: 0, //0=mate, 1 hajime, 2 goldenScore
 
-      infos: ["Tournoi du", "2 Lays Judo Chatonnay", "Toutes catégories"],
+      infos: ["Tournoi du", "2 Lays Judo Chantonnay", "Toutes catégories"],
 
       nexts: [
         {

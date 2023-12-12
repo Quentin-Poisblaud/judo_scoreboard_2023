@@ -89,7 +89,7 @@ export default {
 
     infos: {
       default() {
-        return ["Tournoi du", "2 Lays Judo Chatonnay", "Toutes catégories"]
+        return ["Tournoi du", "2 Lays Judo Chantonnay", "Toutes catégories"]
       },
     },
     nexts: {
