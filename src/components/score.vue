@@ -39,7 +39,7 @@ export default {
   background-color: var(--background_color);
   color: var(--font_color);
   font-family: Arial, Helvetica, sans-serif;
-  font-size: 16vw;
+  font-size: 13vw;
   font-weight: 700;
   display: grid;
   align-items: center;

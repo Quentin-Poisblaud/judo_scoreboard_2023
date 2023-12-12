@@ -1,7 +1,7 @@
 <template>
   <div style="height: 100%; width: 100%">
     <!--Combattant-->
-    <div style="width: 40%; height: 100%; float: left">
+    <div style="width: 50%; height: 100%; float: left">
       <nameAndClub
         :background_color="background_color"
         :font_color="font_color"
@@ -11,7 +11,7 @@
     </div>
 
     <!--Score-->
-    <div style="width: 52%; height: 100%; float: left">
+    <div style="width: 42%; height: 100%; float: left">
       <score
         :background_color="background_color"
         :font_color="font_color"

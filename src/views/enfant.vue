@@ -1,6 +1,3 @@
-<!--TODO: améliorer la lisibilitée du HTML et CSS-->
-<!--NOTES: utiliser des composants pourrait GRANDEMENT simplifier cela-->
-
 <template>
   <div style="height: 37.5vh">
     <player :background_color="'red'" :font_color="'white'" :player="player1" />
@@ -13,87 +10,18 @@
       :player="player2" />
   </div>
 
-  <div style="background-color: black; height: 25vh; margin: 0">
-    <div
-      style="
-        color: white;
-        text-align: center;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        width: 30%;
-        height: 100%;
-        float: left;
-      ">
-      <div
-        style="
-          margin: 0;
-          font-family: Arial, Helvetica, sans-serif;
-          font-weight: 700;
-          font-size: 2vw;
-        ">
-        <div v-for="item in infos">{{ item }}</div>
-      </div>
-    </div>
-
-    <div
-      style="
-        text-align: center;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        width: 40%;
-        height: 100%;
-        float: left;
-        font-family: Arial, Helvetica, sans-serif;
-        font-weight: 700;
-        font-size: 12vw;
-      ">
-      <a style="color: gold" v-if="timerStatus === 2">
-        {{ ("0" + Math.trunc(this.timer / 60)).slice(-2) }}:{{
-          ("0" + (this.timer % 60)).slice(-2)
-        }}
-      </a>
-      <a style="color: lime" v-else-if="timerStatus === 1">
-        {{ ("0" + Math.trunc(this.timer / 60)).slice(-2) }}:{{
-          ("0" + (this.timer % 60)).slice(-2)
-        }}
-      </a>
-      <a style="color: red" v-else>
-        {{ ("0" + Math.trunc(this.timer / 60)).slice(-2) }}:{{
-          ("0" + (this.timer % 60)).slice(-2)
-        }}
-      </a>
-    </div>
-    <div
-      style="
-        color: white;
-        text-align: center;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        width: 30%;
-        height: 100%;
-        float: left;
-      ">
-      <div
-        style="
-          margin: 0;
-          font-family: Arial, Helvetica, sans-serif;
-          font-weight: 700;
-          font-size: 2vw;
-        ">
-        <div>Se prépare :</div>
-        <div v-for="item in nexts">
-          {{ item.nom.toUpperCase() }} {{ item.prenom }} - {{ item.club }}
-        </div>
-      </div>
-    </div>
+  <div style="height: 25vh">
+    <infosBar
+      :timer="timer"
+      :timerStatus="timerStatus"
+      :infos="infos"
+      :nexts="nexts" />
   </div>
 </template>
 
 <script>
 import player from "../components/player.vue"
+import infosBar from "../components/infosBar.vue"
 
 export default {
   data() {
@@ -147,6 +75,7 @@ export default {
   },
   components: {
     player,
+    infosBar,
   },
 
   created() {
