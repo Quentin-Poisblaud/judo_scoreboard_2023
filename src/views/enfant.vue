@@ -2,54 +2,15 @@
 <!--NOTES: utiliser des composants pourrait GRANDEMENT simplifier cela-->
 
 <template>
-  <div style="background-color: red; color: white; height: 37.5vh; margin: 0">
-    <!--Combattant-->
-    <div style="width: 40%; height: 100%; float: left">
-      <nameAndClub
-        :background_color="'red'"
-        :font_color="'white'"
-        :name="player1.nom"
-        :surname="player1.prenom"
-        :club="player1.club" />
-    </div>
-
-    <!--Score-->
-    <div style="width: 52%; height: 100%; float: left">
-      <score
-        :background_color="'red'"
-        :font_color="'white'"
-        :score="player1.score" />
-    </div>
-
-    <!--Pénalitées-->
-    <div style="width: 8%; height: 100%; float: left">
-      <penalties :background_color="'red'" :penalties="player1.shido" />
-    </div>
+  <div style="height: 37.5vh">
+    <player :background_color="'red'" :font_color="'white'" :player="player1" />
   </div>
 
-  <div style="background-color: white; color: black; height: 37.5vh; margin: 0">
-    <!--Combattant-->
-    <div style="width: 40%; height: 100%; float: left">
-      <nameAndClub
-        :background_color="'white'"
-        :font_color="'black'"
-        :name="player2.nom"
-        :surname="player2.prenom"
-        :club="player2.club" />
-    </div>
-
-    <!--Score-->
-    <div style="width: 52%; height: 100%; float: left">
-      <score
-        :background_color="'white'"
-        :font_color="'black'"
-        :score="player2.score" />
-    </div>
-
-    <!--Pénalitées-->
-    <div style="width: 8%; height: 100%; float: left">
-      <penalties :background_color="'white'" :penalties="player2.shido" />
-    </div>
+  <div style="height: 37.5vh">
+    <player
+      :background_color="'white'"
+      :font_color="'black'"
+      :player="player2" />
   </div>
 
   <div style="background-color: black; height: 25vh; margin: 0">
@@ -132,9 +93,7 @@
 </template>
 
 <script>
-import nameAndClub from "../components/nameAndClub.vue"
-import score from "../components/score.vue"
-import penalties from "../components/penalties.vue"
+import player from "../components/player.vue"
 
 export default {
   data() {
@@ -187,9 +146,7 @@ export default {
     }
   },
   components: {
-    nameAndClub,
-    score,
-    penalties,
+    player,
   },
 
   created() {
@@ -240,5 +197,3 @@ export default {
   },
 }
 </script>
-
-<style scoped></style>

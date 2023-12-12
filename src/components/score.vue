@@ -9,9 +9,6 @@
 </template>
 <script>
 export default {
-  data() {
-    return { girouetteTimer: false }
-  },
   props: {
     background_color: { default: "grey" },
     font_color: { default: "black" },
