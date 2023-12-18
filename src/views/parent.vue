@@ -1,118 +1,233 @@
 <template>
-  <h1>Judo Scoreboard</h1>
+  <div v-if="!portChoosed">Merci de recharger la page</div>
 
-  <div v-if="!portChoosed">
-    <button @click="ouvrirNouvelleFenetre">ouvrir afficheur</button>
-  </div>
-
-  <div v-else>
-    <div>
-      <h3>Combatant 1</h3>
-      <h4>
-        Nom <input v-model="nom1" @change="sendData" /> Prénom
-        <input v-model="prenom1" @change="sendData" /> Club
-        <input v-model="club1" @change="sendData" />
-      </h4>
-      I
-      <input
-        type="number"
-        min="0"
-        max="9"
-        v-model="ippon1"
-        @change="sendData" />
-      W
-      <input type="number" min="0" max="9" v-model="waza1" @change="sendData" />
-      K
-      <input
-        type="number"
-        min="0"
-        max="99"
-        v-model="kinza1"
-        @change="sendData" />
-      <div>
-        S
+  <div
+    v-else
+    style="font-family: Arial, Helvetica, sans-serif; font-weight: 600">
+    <div
+      style="background-color: red; color: white; height: 30vh; padding: 0 3vw">
+      <div style="font-weight: 700; font-size: 5vh; padding-top: 2vh">
+        Combatant 1
+      </div>
+      <br />
+      <!--Combattant-->
+      <div style="width: 55%; float: left">
+        <div style="padding: 1vh 0 0 0">
+          <a style="width: 4.5em; float: left; font-size: 3vh">Nom</a>
+          <input
+            v-model="nom1"
+            @change="sendData"
+            style="width: calc(75% - 4.5em); height: 3.5vh" />
+        </div>
+        <div style="padding: 1vh 0 0 0">
+          <a style="width: 4.5em; float: left; font-size: 3vh">Prénom</a>
+          <input
+            v-model="prenom1"
+            @change="sendData"
+            style="width: calc(75% - 4.5em); height: 3.5vh" />
+        </div>
+        <div style="padding: 1vh 0 0 0">
+          <a style="width: 4.5em; float: left; font-size: 3vh">Club</a>
+          <input
+            v-model="club1"
+            @change="sendData"
+            style="width: calc(75% - 4.5em); height: 3.5vh" />
+        </div>
+      </div>
+      <!--Score-->
+      <div style="width: 22.5%; float: left">
+        <div style="padding: 1vh 0 0 0">
+          <a style="width: 1.5em; float: left; font-size: 3vh">I</a>
+          <input
+            type="number"
+            min="0"
+            max="9"
+            v-model="ippon1"
+            @change="sendData"
+            style="width: 3em; height: 3.5vh" />
+        </div>
+        <div style="padding: 1vh 0 0 0">
+          <a style="width: 1.5em; float: left; font-size: 3vh">W</a>
+          <input
+            type="number"
+            min="0"
+            max="9"
+            v-model="waza1"
+            @change="sendData"
+            style="width: 3em; height: 3.5vh" />
+        </div>
+        <div style="padding: 1vh 0 0 0">
+          <a style="width: 1.5em; float: left; font-size: 3vh">K</a>
+          <input
+            type="number"
+            min="0"
+            max="99"
+            v-model="kinza1"
+            @change="sendData"
+            style="width: 3em; height: 3.5vh" />
+        </div>
+      </div>
+      <!--Pénalitées-->
+      <div style="width: 22.5%; float: left; padding: 1vh 0 0 0">
+        <a style="width: 1.5em; float: left; font-size: 3vh">S</a>
         <input
           type="number"
           min="-1"
           max="3"
           v-model="shido1"
-          @change="sendData" />
+          @change="sendData"
+          style="width: 3em; height: 3.5vh" />
       </div>
     </div>
-    <div>
-      <h3>Combatant 2</h3>
-      <h4>
-        Nom <input v-model="nom2" @change="sendData" /> Prénom
-        <input v-model="prenom2" @change="sendData" /> Club
-        <input v-model="club2" @change="sendData" />
-      </h4>
-      I
-      <input
-        type="number"
-        min="0"
-        max="9"
-        v-model="ippon2"
-        @change="sendData" />
-      W
-      <input type="number" min="0" max="9" v-model="waza2" @change="sendData" />
-      K
-      <input
-        type="number"
-        min="0"
-        max="99"
-        v-model="kinza2"
-        @change="sendData" />
-      <div>
-        S
+    <div
+      style="
+        background-color: white;
+        color: black;
+        height: 30vh;
+        padding: 0 3vw;
+      ">
+      <div style="font-weight: 700; font-size: 5vh; padding-top: 2vh">
+        Combatant 2
+      </div>
+      <br />
+      <!--Combattant-->
+      <div style="width: 55%; float: left">
+        <div style="padding: 1vh 0 0 0">
+          <a style="width: 4.5em; float: left; font-size: 3vh">Nom</a>
+          <input
+            v-model="nom2"
+            @change="sendData"
+            style="width: calc(75% - 4.5em); height: 3.5vh" />
+        </div>
+        <div style="padding: 1vh 0 0 0">
+          <a style="width: 4.5em; float: left; font-size: 3vh">Prénom</a>
+          <input
+            v-model="prenom2"
+            @change="sendData"
+            style="width: calc(75% - 4.5em); height: 3.5vh" />
+        </div>
+        <div style="padding: 1vh 0 0 0">
+          <a style="width: 4.5em; float: left; font-size: 3vh">Club</a>
+          <input
+            v-model="club2"
+            @change="sendData"
+            style="width: calc(75% - 4.5em); height: 3.5vh" />
+        </div>
+      </div>
+      <!--Score-->
+      <div style="width: 22.5%; float: left">
+        <div style="padding: 1vh 0 0 0">
+          <a style="width: 1.5em; float: left; font-size: 3vh">I</a>
+          <input
+            type="number"
+            min="0"
+            max="9"
+            v-model="ippon2"
+            @change="sendData"
+            style="width: 3em; height: 3.5vh" />
+        </div>
+        <div style="padding: 1vh 0 0 0">
+          <a style="width: 1.5em; float: left; font-size: 3vh">W</a>
+          <input
+            type="number"
+            min="0"
+            max="9"
+            v-model="waza2"
+            @change="sendData"
+            style="width: 3em; height: 3.5vh" />
+        </div>
+        <div style="padding: 1vh 0 0 0">
+          <a style="width: 1.5em; float: left; font-size: 3vh">K</a>
+          <input
+            type="number"
+            min="0"
+            max="99"
+            v-model="kinza2"
+            @change="sendData"
+            style="width: 3em; height: 3.5vh" />
+        </div>
+      </div>
+      <!--Pénalitées-->
+      <div style="width: 22.5%; float: left; padding: 1vh 0 0 0">
+        <a style="width: 1.5em; float: left; font-size: 3vh">S</a>
         <input
           type="number"
           min="-1"
           max="3"
           v-model="shido2"
-          @change="sendData" />
+          @change="sendData"
+          style="width: 3em; height: 3.5vh" />
       </div>
     </div>
-    <div>
-      <a>
+    <div style="height: 40vh; background-color: black; color: white">
+      <div style="padding: 3vh; width: 30vw; float: left">
         <textarea
           v-model="infos"
           @change="sendData"
-          style="width: 25vw; height: 12vh" />
-      </a>
-      <a>
-        <input type="number" min="0" v-model="timerM" @change="sendData" />
-        <input
-          type="number"
-          min="0"
-          max="59"
-          v-model="timerS"
-          @change="sendData" />
-        <input
-          type="number"
-          min="0"
-          max="2"
-          v-model="timerStatus"
-          @change="sendData" />
-      </a>
-      <a>
-        <h4>Se prépare</h4>
-        <div>
-          <input v-model="sp1name" style="width: 15vw" @change="sendData" />
-          <input v-model="sp1surname" style="width: 15vw" @change="sendData" />
-          -
-          <input v-model="sp1club" style="width: 10vw" @change="sendData" />
+          style="width: 25vw; height: 20vh; padding: 3vh; font-size: 2.5vh" />
+        <div style="font-weight: 300; padding-top: 2vh">
+          <i>5 lignes max</i>
         </div>
-        <div>
-          <input v-model="sp2name" style="width: 15vw" @change="sendData" />
-          <input v-model="sp2surname" style="width: 15vw" @change="sendData" />
-          -
-          <input v-model="sp2club" style="width: 10vw" @change="sendData" />
+      </div>
+      <div style="float: left; width: 25vw">
+        <div style="padding-top: 10vh">
+          <input
+            type="number"
+            min="0"
+            v-model="timerM"
+            @change="sendData"
+            style="width: 1.5em; font-size: 4vw" />
+          <input
+            type="number"
+            min="0"
+            max="59"
+            v-model="timerS"
+            @change="sendData"
+            style="width: 1.5em; font-size: 4vw" />
         </div>
-      </a>
-    </div>
-    <div>
-      <br /><br /><br />
-      <button @click="kill">kill</button>
+        <div style="padding-left: 0.75em; padding-top: 2vh; font-size: 4vw">
+          <input
+            type="number"
+            min="0"
+            max="2"
+            v-model="timerStatus"
+            @change="sendData"
+            style="width: 2.5em; font-size: 2.5vw" />
+        </div>
+      </div>
+      <div style="float: left; width: 35vw">
+        <h4 style="padding-top: 5vh">Se prépare</h4>
+        <div style="height: 3.5vh">
+          <input
+            v-model="sp1name"
+            style="width: 30%; height: 3.5vh"
+            @change="sendData" />
+          <input
+            v-model="sp1surname"
+            style="width: 30%; height: 3.5vh"
+            @change="sendData" />
+          -
+          <input
+            v-model="sp1club"
+            style="width: 20%; height: 3.5vh"
+            @change="sendData" />
+        </div>
+        <div style="padding-top: 2vh">
+          <input
+            v-model="sp2name"
+            style="width: 30%; height: 3.5vh"
+            @change="sendData" />
+          <input
+            v-model="sp2surname"
+            style="width: 30%; height: 3.5vh"
+            @change="sendData" />
+          -
+          <input
+            v-model="sp2club"
+            style="width: 20%; height: 3.5vh"
+            @change="sendData" />
+        </div>
+      </div>
     </div>
   </div>
 
@@ -171,6 +286,9 @@ export default {
     var win = window.origin
     var tmp = win.substring(win.indexOf("://") + 3)
     this.port = tmp.substring(tmp.indexOf(":") + 1)
+    setTimeout(() => {
+      this.ouvrirNouvelleFenetre()
+    }, 500)
   },
 
   methods: {
