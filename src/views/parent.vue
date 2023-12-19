@@ -185,14 +185,19 @@
             @change="sendData"
             style="width: 1.5em; font-size: 4vw" />
         </div>
-        <div style="padding-left: 0.75em; padding-top: 2vh; font-size: 4vw">
-          <input
+        <div style="padding-top: 2vh; font-size: 4vw">
+          <!--input
             type="number"
             min="0"
             max="2"
             v-model="timerStatus"
             @change="sendData"
-            style="width: 2.5em; font-size: 2.5vw" />
+            style="width: 2.5em; font-size: 2.5vw" /-->
+          <button
+            @click="changeHajime"
+            style="width: 5.5em; height: 2em; font-size: 2.5vw">
+            {{ hajime ? "mate" : "hajime" }}
+          </button>
         </div>
       </div>
       <div style="float: left; width: 35vw">
@@ -241,6 +246,8 @@ var nouvelleFenetre
 export default {
   data() {
     return {
+      hajime: false,
+
       //datas player 1
       nom1: "Combatant",
       prenom1: "n° 1",
@@ -289,6 +296,12 @@ export default {
     setTimeout(() => {
       this.ouvrirNouvelleFenetre()
     }, 500)
+
+    window.addEventListener("keydown", (e) => {
+      if (e.key === " ") {
+        this.changeHajime()
+      }
+    })
   },
 
   methods: {
@@ -323,6 +336,37 @@ export default {
 
     sendData() {
       nouvelleFenetre.postMessage(this.datas, "*")
+    },
+
+    changeHajime() {
+      this.hajime = !this.hajime
+      if (this.hajime) {
+        this.timerStatus = 1
+        this.sendData()
+        this.timerDown()
+        //TODO: pour golden
+      } else {
+        this.timerStatus = 0
+        this.sendData()
+      }
+    },
+
+    timerDown() {
+      if (this.timer === 0) {
+        this.hajime = false
+        this.timerStatus = 0
+        this.sendData()
+      }
+      if (this.hajime) {
+        if (this.timerS <= 0) {
+          this.timerM--
+          this.timerS += 59
+        } else this.timerS--
+        this.sendData()
+        setTimeout(() => {
+          this.timerDown()
+        }, 1000)
+      }
     },
   },
 
