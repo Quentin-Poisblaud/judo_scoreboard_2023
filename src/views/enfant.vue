@@ -1,100 +1,128 @@
 <template>
-  
-    <h1>Enfant</h1>
+  <div style="height: 37.5vh">
+    <player :background_color="'red'" :font_color="'white'" :player="player1" />
+  </div>
 
-    <!-- <div v-if="!portChoosed">
-      <input v-model="port" />
-      <button @click="ouvrirNouvelleFenetre">ouvrir enfant</button>
-    </div> -->
+  <div style="height: 37.5vh">
+    <player
+      :background_color="'white'"
+      :font_color="'black'"
+      :player="player2" />
+  </div>
 
-    <div>
-      <input v-model="messageSend" />
-      <button @click="sendData">envoyer data</button>
-      <br />
-
-      {{ messageRecieved }}
-
-      <!-- <div>
-        <button @click="kill">kill</button>
-      </div> -->
-    </div>
-  
-  <router-view></router-view>
+  <div style="height: 25vh">
+    <infosBar
+      :timer="timer"
+      :timerStatus="timerStatus"
+      :infos="infos"
+      :nexts="nexts" />
+  </div>
 </template>
 
 <script>
-
-// const options = 'width=800,height=600'
-// var nouvelleFenetre
+import player from "../components/player.vue"
+import infosBar from "../components/infosBar.vue"
 
 export default {
-
   data() {
     return {
-      // port: '',
-      // portChoosed: false,
-      messageSend: '',
-      messageRecieved: '',
-      parentLink: ''
+      player1: {
+        nom: "Combatant",
+        prenom: "n° 1",
+        club: "FRA",
+        shido: 0, //-1 = H ; 1 à 3 = nb Shido
+        score: {
+          ippon: 0,
+          waza: 0,
+          kinza: 0,
+        },
+      },
+
+      player2: {
+        nom: "Combatant",
+        prenom: "n° 2",
+        club: "FRA",
+        shido: 0, //-1 = H ; 1 à 3 = nb Shido
+        score: {
+          ippon: 0,
+          waza: 0,
+          kinza: 0,
+        },
+      },
+
+      timer: 300, //temps en secondes
+
+      timerStatus: 0, //0=mate, 1 hajime, 2 goldenScore
+
+      infos: ["Tournoi du", "2 Lays Judo Chantonnay", "Toutes catégories"],
+
+      nexts: [
+        {
+          nom: "",
+          prenom: "",
+          club: "",
+        },
+
+        {
+          nom: "",
+          prenom: "",
+          club: "",
+        },
+      ],
+
+      parentLink: "",
     }
   },
+  components: {
+    player,
+    infosBar,
+  },
+
   created() {
-    // var tmp=window.origin
-    // var lul =tmp.substring(tmp.indexOf('://')+3)
-    // this.port=lul.substring(lul.indexOf(':')+1)
-    window.addEventListener('message', (event) => {
+    /**
+     * définit l'adresse du parent
+     */
+    window.addEventListener("message", (event) => {
       const donnees = event.data
       if (donnees.link) {
         this.parentLink = event.origin
-        this.createListen()
       }
     })
-    window.addEventListener('beforeunload', () => {
-      window.opener.postMessage({ kill: true }, '*')
+
+    /**
+     * écoute des datas du parent
+     */
+    window.addEventListener("message", (event) => {
+      if (event.origin === this.parentLink) {
+        const donnees = event.data
+        this.traitement(donnees)
+      }
+    })
+
+    /**
+     * envoie au parent un faire part de décès
+     */
+    window.addEventListener("beforeunload", () => {
+      window.opener.postMessage({ kill: true }, "*")
     })
   },
 
-  computed: {
-    datas() {
-      return { message: this.messageSend }
-    }
-  },
   methods: {
-    createListen() {
-      window.addEventListener('message', (event) => {
-        if (event.origin === this.parentLink) {
-          const donnees = event.data
-          // if (donnees.kill) this.kill()
-          this.traitement(donnees)
-        }
-      })
-    },
+    /**
+     * Attribue les données reçu de la page parent au variables locales pour l'affichage
+     *
+     * @param donnees
+     */
     traitement(donnees) {
-      this.messageRecieved = donnees.message
+      if (donnees.player1 !== undefined) {
+        this.player1 = donnees.player1
+        this.player2 = donnees.player2
+        this.timer = donnees.timer
+        this.timerStatus = donnees.timerStatus
+        this.infos = donnees.infos
+        this.nexts = donnees.nexts
+      }
     },
-    sendData() {
-      window.opener.postMessage(this.datas, '*')
-    }
-
-    // ouvrirNouvelleFenetre() {
-    //   this.childLink = 'http://localhost:' + this.port
-    //   this.portChoosed = true
-    //   nouvelleFenetre = window.open(this.childLink + '/e/', '_blank', options)
-    //   setTimeout(() => {
-    //     nouvelleFenetre.postMessage({ link: true }, '*')
-    //   }, 1000)
-    //   this.createListen()
-    // },
-
-    // kill() {
-    //   nouvelleFenetre.close()
-    //   this.port = ''
-    //   this.portChoosed = false
-    //   this.messageSend = ''
-    //   this.messageRecieved = ''
-    //   this.childLink = ''
-    // }
-  }
+  },
 }
 </script>
-<style lang="scss" scoped></style>

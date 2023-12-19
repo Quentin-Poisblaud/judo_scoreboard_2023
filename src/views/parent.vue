@@ -1,100 +1,441 @@
 <template>
+  <div v-if="!portChoosed">Merci de recharger la page</div>
 
-    <h1>Parent</h1>
-
-    <div v-if="!portChoosed">
-      <!-- <input v-model="port" /> -->
-      <button @click="ouvrirNouvelleFenetre">ouvrir enfant</button>
-    </div>
-
-    <div v-else>
-      <input v-model="messageSend" />
-      <button @click="sendData">envoyer data</button>
+  <div
+    v-else
+    style="font-family: Arial, Helvetica, sans-serif; font-weight: 600">
+    <div
+      style="background-color: red; color: white; height: 30vh; padding: 0 3vw">
+      <div style="font-weight: 700; font-size: 5vh; padding-top: 2vh">
+        Combatant 1
+      </div>
       <br />
-
-      {{ messageRecieved }}
-
-      <div>
-        <button @click="kill">kill</button>
+      <!--Combattant-->
+      <div style="width: 55%; float: left">
+        <div style="padding: 1vh 0 0 0">
+          <a style="width: 4.5em; float: left; font-size: 3vh">Nom</a>
+          <input
+            v-model="nom1"
+            @change="sendData"
+            style="width: calc(75% - 4.5em); height: 3.5vh" />
+        </div>
+        <div style="padding: 1vh 0 0 0">
+          <a style="width: 4.5em; float: left; font-size: 3vh">Prénom</a>
+          <input
+            v-model="prenom1"
+            @change="sendData"
+            style="width: calc(75% - 4.5em); height: 3.5vh" />
+        </div>
+        <div style="padding: 1vh 0 0 0">
+          <a style="width: 4.5em; float: left; font-size: 3vh">Club</a>
+          <input
+            v-model="club1"
+            @change="sendData"
+            style="width: calc(75% - 4.5em); height: 3.5vh" />
+        </div>
+      </div>
+      <!--Score-->
+      <div style="width: 22.5%; float: left">
+        <div style="padding: 1vh 0 0 0">
+          <a style="width: 1.5em; float: left; font-size: 3vh">I</a>
+          <input
+            type="number"
+            min="0"
+            max="9"
+            v-model="ippon1"
+            @change="sendData"
+            style="width: 3em; height: 3.5vh" />
+        </div>
+        <div style="padding: 1vh 0 0 0">
+          <a style="width: 1.5em; float: left; font-size: 3vh">W</a>
+          <input
+            type="number"
+            min="0"
+            max="9"
+            v-model="waza1"
+            @change="sendData"
+            style="width: 3em; height: 3.5vh" />
+        </div>
+        <div style="padding: 1vh 0 0 0">
+          <a style="width: 1.5em; float: left; font-size: 3vh">K</a>
+          <input
+            type="number"
+            min="0"
+            max="99"
+            v-model="kinza1"
+            @change="sendData"
+            style="width: 3em; height: 3.5vh" />
+        </div>
+      </div>
+      <!--Pénalitées-->
+      <div style="width: 22.5%; float: left">
+        <div style="padding: 1vh 0 0 0">
+          <a style="width: 1.5em; float: left; font-size: 3vh">S</a>
+          <input
+            type="number"
+            min="0"
+            max="3"
+            v-model="s1"
+            @change="sendData"
+            style="width: 3em; height: 3.5vh" />
+        </div>
+        <div style="padding: 1vh 0 0 0">
+          <input
+            @change="sendData"
+            type="checkbox"
+            style="transform: scale(2); margin-top: 1vh"
+            v-model="h1" />
+          <a style="width: 1.5em; float: left; font-size: 3vh">H</a>
+        </div>
       </div>
     </div>
+    <div
+      style="
+        background-color: white;
+        color: black;
+        height: 30vh;
+        padding: 0 3vw;
+      ">
+      <div style="font-weight: 700; font-size: 5vh; padding-top: 2vh">
+        Combatant 2
+      </div>
+      <br />
+      <!--Combattant-->
+      <div style="width: 55%; float: left">
+        <div style="padding: 1vh 0 0 0">
+          <a style="width: 4.5em; float: left; font-size: 3vh">Nom</a>
+          <input
+            v-model="nom2"
+            @change="sendData"
+            style="width: calc(75% - 4.5em); height: 3.5vh" />
+        </div>
+        <div style="padding: 1vh 0 0 0">
+          <a style="width: 4.5em; float: left; font-size: 3vh">Prénom</a>
+          <input
+            v-model="prenom2"
+            @change="sendData"
+            style="width: calc(75% - 4.5em); height: 3.5vh" />
+        </div>
+        <div style="padding: 1vh 0 0 0">
+          <a style="width: 4.5em; float: left; font-size: 3vh">Club</a>
+          <input
+            v-model="club2"
+            @change="sendData"
+            style="width: calc(75% - 4.5em); height: 3.5vh" />
+        </div>
+      </div>
+      <!--Score-->
+      <div style="width: 22.5%; float: left">
+        <div style="padding: 1vh 0 0 0">
+          <a style="width: 1.5em; float: left; font-size: 3vh">I</a>
+          <input
+            type="number"
+            min="0"
+            max="9"
+            v-model="ippon2"
+            @change="sendData"
+            style="width: 3em; height: 3.5vh" />
+        </div>
+        <div style="padding: 1vh 0 0 0">
+          <a style="width: 1.5em; float: left; font-size: 3vh">W</a>
+          <input
+            type="number"
+            min="0"
+            max="9"
+            v-model="waza2"
+            @change="sendData"
+            style="width: 3em; height: 3.5vh" />
+        </div>
+        <div style="padding: 1vh 0 0 0">
+          <a style="width: 1.5em; float: left; font-size: 3vh">K</a>
+          <input
+            type="number"
+            min="0"
+            max="99"
+            v-model="kinza2"
+            @change="sendData"
+            style="width: 3em; height: 3.5vh" />
+        </div>
+      </div>
+      <!--Pénalitées-->
+      <div style="width: 22.5%; float: left">
+        <div style="padding: 1vh 0 0 0">
+          <a style="width: 1.5em; float: left; font-size: 3vh">S</a>
+          <input
+            type="number"
+            min="0"
+            max="3"
+            v-model="s2"
+            @change="sendData"
+            style="width: 3em; height: 3.5vh" />
+        </div>
+        <div style="padding: 1vh 0 0 0">
+          <input
+            @change="sendData"
+            type="checkbox"
+            style="transform: scale(2); margin-top: 1vh"
+            v-model="h2" />
+          <a style="width: 1.5em; float: left; font-size: 3vh">H</a>
+        </div>
+      </div>
+    </div>
+    <div style="height: 40vh; background-color: black; color: white">
+      <div style="padding: 3vh; width: 30vw; float: left">
+        <textarea
+          v-model="infos"
+          @change="sendData"
+          style="width: 25vw; height: 20vh; padding: 3vh; font-size: 2.5vh" />
+        <div style="font-weight: 300; padding-top: 2vh">
+          <i>5 lignes max</i>
+        </div>
+      </div>
+      <div style="float: left; width: 25vw">
+        <div style="padding-top: 10vh">
+          <input
+            type="number"
+            min="0"
+            v-model="timerM"
+            @change="sendData"
+            style="width: 1.5em; font-size: 4vw" />
+          <input
+            type="number"
+            min="0"
+            max="59"
+            v-model="timerS"
+            @change="sendData"
+            style="width: 1.5em; font-size: 4vw" />
+        </div>
+        <div style="padding-top: 2vh; font-size: 4vw">
+          <!--input
+            type="number"
+            min="0"
+            max="2"
+            v-model="timerStatus"
+            @change="sendData"
+            style="width: 2.5em; font-size: 2.5vw" /-->
+          <button
+            @click="changeHajime"
+            style="width: 5.5em; height: 2em; font-size: 2.5vw">
+            {{ hajime ? "mate" : "hajime" }}
+          </button>
+        </div>
+      </div>
+      <div style="float: left; width: 35vw">
+        <h4 style="padding-top: 5vh">Se prépare</h4>
+        <div style="height: 3.5vh">
+          <input
+            v-model="sp1name"
+            style="width: 30%; height: 3.5vh"
+            @change="sendData" />
+          <input
+            v-model="sp1surname"
+            style="width: 30%; height: 3.5vh"
+            @change="sendData" />
+          -
+          <input
+            v-model="sp1club"
+            style="width: 20%; height: 3.5vh"
+            @change="sendData" />
+        </div>
+        <div style="padding-top: 2vh">
+          <input
+            v-model="sp2name"
+            style="width: 30%; height: 3.5vh"
+            @change="sendData" />
+          <input
+            v-model="sp2surname"
+            style="width: 30%; height: 3.5vh"
+            @change="sendData" />
+          -
+          <input
+            v-model="sp2club"
+            style="width: 20%; height: 3.5vh"
+            @change="sendData" />
+        </div>
+      </div>
+    </div>
+  </div>
 
   <router-view></router-view>
 </template>
 
 <script>
-
-const options = 'width=800,height=600'
+const options = "width=800,height=600"
 var nouvelleFenetre
 
 export default {
-
   data() {
     return {
-      port: '',
+      hajime: false,
+
+      //datas player 1
+      nom1: "Combatant",
+      prenom1: "n° 1",
+      club1: "FRA",
+      s1: 0,
+      h1: false,
+      ippon1: 0,
+      waza1: 0,
+      kinza1: 0,
+
+      //datas player 2
+      nom2: "Combatant",
+      prenom2: "n° 2",
+      club2: "FRA",
+      s2: 0,
+      h2: false,
+      ippon2: 0,
+      waza2: 0,
+      kinza2: 0,
+
+      timerM: 5,
+      timerS: 0,
+
+      timerStatus: 0,
+
+      infos: "Tournoi du\n2 Lays Judo Chantonnay\nToutes catégories",
+
+      sp1name: "",
+      sp1surname: "",
+      sp1club: "",
+
+      sp2name: "",
+      sp2surname: "",
+      sp2club: "",
+
+      //variables de fonctionnement
+      port: "",
       portChoosed: false,
-      messageSend: '',
-      messageRecieved: '',
-      childLink: ''
+      childLink: "",
     }
-  },
-  created() {
-    var tmp=window.origin
-    var lul =tmp.substring(tmp.indexOf('://')+3)
-    this.port=lul.substring(lul.indexOf(':')+1)
-    // window.addEventListener('message', (event) => {
-    //   const donnees = event.data
-    //   if (donnees.link) {
-    //     this.parentLink = event.origin
-    //     this.createListen()
-    //   }
-    // })
-    // window.addEventListener('beforeunload', () => {
-    //   window.opener.postMessage({ kill: true }, '*')
-    // })
   },
 
-  computed: {
-    datas() {
-      return { message: this.messageSend }
-    }
+  //on setup le port lors de la création
+  created() {
+    var win = window.origin
+    var tmp = win.substring(win.indexOf("://") + 3)
+    this.port = tmp.substring(tmp.indexOf(":") + 1)
+    setTimeout(() => {
+      this.ouvrirNouvelleFenetre()
+    }, 500)
+
+    window.addEventListener("keydown", (e) => {
+      if (e.key === " ") {
+        this.changeHajime()
+      }
+    })
   },
+
   methods: {
     createListen() {
-      window.addEventListener('message', (event) => {
+      window.addEventListener("message", (event) => {
         if (event.origin === this.childLink) {
           const donnees = event.data
           if (donnees.kill) this.kill()
-          this.traitement(donnees) //et on traite les données recues
         }
       })
     },
-    traitement(donnees) {
-      this.messageRecieved = donnees.message
-    },
-    sendData() {
-      nouvelleFenetre.postMessage(this.datas, '*')
-    },
 
     ouvrirNouvelleFenetre() {
-      this.childLink = 'http://localhost:' + this.port
+      this.childLink = "http://localhost:" + this.port
       this.portChoosed = true
-      nouvelleFenetre = window.open(this.childLink + '/e/', '_blank', options)
+      nouvelleFenetre = window.open(this.childLink + "/e/", "_blank", options)
       setTimeout(() => {
-        nouvelleFenetre.postMessage({ link: true }, '*')
+        nouvelleFenetre.postMessage({ link: true }, "*")
       }, 1000)
       this.createListen()
+
+      setTimeout(() => {
+        this.sendData()
+      }, 1000)
     },
 
     kill() {
       nouvelleFenetre.close()
-      //this.port = ''
       this.portChoosed = false
-      this.messageSend = ''
-      this.messageRecieved = ''
-      this.childLink = ''
-    }
-  }
+      this.childLink = ""
+    },
+
+    sendData() {
+      nouvelleFenetre.postMessage(this.datas, "*")
+    },
+
+    changeHajime() {
+      this.hajime = !this.hajime
+      if (this.hajime) {
+        this.timerStatus = 1
+        this.sendData()
+        this.timerDown()
+        //TODO: pour golden
+      } else {
+        this.timerStatus = 0
+        this.sendData()
+      }
+    },
+
+    timerDown() {
+      if (this.timer === 0) {
+        this.hajime = false
+        this.timerStatus = 0
+        this.sendData()
+      }
+      if (this.hajime) {
+        if (this.timerS <= 0) {
+          this.timerM--
+          this.timerS += 59
+        } else this.timerS--
+        this.sendData()
+        setTimeout(() => {
+          this.timerDown()
+        }, 1000)
+      }
+    },
+  },
+
+  computed: {
+    shido1() {
+      if (this.h1) return -1
+      else return this.s1
+    },
+    shido2() {
+      if (this.h2) return -1
+      else return this.s2
+    },
+    timer() {
+      return this.timerM * 60 + this.timerS
+    },
+
+    //datas envoyées vers la page fils
+    datas() {
+      return {
+        player1: {
+          nom: this.nom1,
+          prenom: this.prenom1,
+          club: this.club1,
+          shido: this.shido1,
+          score: { ippon: this.ippon1, waza: this.waza1, kinza: this.kinza1 },
+        },
+        player2: {
+          nom: this.nom2,
+          prenom: this.prenom2,
+          club: this.club2,
+          shido: this.shido2,
+          score: { ippon: this.ippon2, waza: this.waza2, kinza: this.kinza2 },
+        },
+
+        timer: this.timer,
+
+        timerStatus: this.timerStatus,
+
+        infos: this.infos.split("\n"),
+
+        nexts: [
+          { nom: this.sp1name, prenom: this.sp1surname, club: this.sp1club },
+          { nom: this.sp2name, prenom: this.sp2surname, club: this.sp2club },
+        ],
+      }
+    },
+  },
 }
 </script>
-<style lang="scss" scoped></style>
+<style scoped></style>
