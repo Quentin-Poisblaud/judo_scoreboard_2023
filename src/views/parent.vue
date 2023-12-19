@@ -68,15 +68,25 @@
         </div>
       </div>
       <!--Pénalitées-->
-      <div style="width: 22.5%; float: left; padding: 1vh 0 0 0">
-        <a style="width: 1.5em; float: left; font-size: 3vh">S</a>
-        <input
-          type="number"
-          min="-1"
-          max="3"
-          v-model="shido1"
-          @change="sendData"
-          style="width: 3em; height: 3.5vh" />
+      <div style="width: 22.5%; float: left">
+        <div style="padding: 1vh 0 0 0">
+          <a style="width: 1.5em; float: left; font-size: 3vh">S</a>
+          <input
+            type="number"
+            min="0"
+            max="3"
+            v-model="s1"
+            @change="sendData"
+            style="width: 3em; height: 3.5vh" />
+        </div>
+        <div style="padding: 1vh 0 0 0">
+          <input
+            @change="sendData"
+            type="checkbox"
+            style="transform: scale(2); margin-top: 1vh"
+            v-model="h1" />
+          <a style="width: 1.5em; float: left; font-size: 3vh">H</a>
+        </div>
       </div>
     </div>
     <div
@@ -148,15 +158,25 @@
         </div>
       </div>
       <!--Pénalitées-->
-      <div style="width: 22.5%; float: left; padding: 1vh 0 0 0">
-        <a style="width: 1.5em; float: left; font-size: 3vh">S</a>
-        <input
-          type="number"
-          min="-1"
-          max="3"
-          v-model="shido2"
-          @change="sendData"
-          style="width: 3em; height: 3.5vh" />
+      <div style="width: 22.5%; float: left">
+        <div style="padding: 1vh 0 0 0">
+          <a style="width: 1.5em; float: left; font-size: 3vh">S</a>
+          <input
+            type="number"
+            min="0"
+            max="3"
+            v-model="s2"
+            @change="sendData"
+            style="width: 3em; height: 3.5vh" />
+        </div>
+        <div style="padding: 1vh 0 0 0">
+          <input
+            @change="sendData"
+            type="checkbox"
+            style="transform: scale(2); margin-top: 1vh"
+            v-model="h2" />
+          <a style="width: 1.5em; float: left; font-size: 3vh">H</a>
+        </div>
       </div>
     </div>
     <div style="height: 40vh; background-color: black; color: white">
@@ -252,7 +272,8 @@ export default {
       nom1: "Combatant",
       prenom1: "n° 1",
       club1: "FRA",
-      shido1: 0,
+      s1: 0,
+      h1: false,
       ippon1: 0,
       waza1: 0,
       kinza1: 0,
@@ -261,7 +282,8 @@ export default {
       nom2: "Combatant",
       prenom2: "n° 2",
       club2: "FRA",
-      shido2: 0,
+      s2: 0,
+      h2: false,
       ippon2: 0,
       waza2: 0,
       kinza2: 0,
@@ -371,6 +393,14 @@ export default {
   },
 
   computed: {
+    shido1() {
+      if (this.h1) return -1
+      else return this.s1
+    },
+    shido2() {
+      if (this.h2) return -1
+      else return this.s2
+    },
     timer() {
       return this.timerM * 60 + this.timerS
     },
