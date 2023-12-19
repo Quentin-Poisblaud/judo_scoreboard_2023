@@ -1,13 +1,13 @@
 # judo scoreboard 2023
 
 pour lancer le projet :
+
 ```sh
 git clone https://github.com/Quentin-Poisblaud/judo_scoreboard_2023.git
 cd judo_scoreboard_2023
 npm install
-npm run dev
+npm run use
 ```
-
 
 # tmp
 

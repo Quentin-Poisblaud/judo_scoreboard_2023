@@ -3,9 +3,12 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
+    "use": "vite --open",
     "dev": "vite",
     "build": "vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "host": "vite --host",
+    "hostUse": "vite --host --open"
   },
   "dependencies": {
     "vue": "^3.3.4",
