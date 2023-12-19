@@ -271,7 +271,7 @@ export default {
       //datas player 1
       nom1: "Combatant",
       prenom1: "n° 1",
-      club1: "FRA",
+      club1: "2LJC",
       s1: 0,
       h1: false,
       ippon1: 0,
@@ -281,19 +281,20 @@ export default {
       //datas player 2
       nom2: "Combatant",
       prenom2: "n° 2",
-      club2: "FRA",
+      club2: "2LJC",
       s2: 0,
       h2: false,
       ippon2: 0,
       waza2: 0,
       kinza2: 0,
 
-      timerM: 5,
+      timerM: 3,
       timerS: 0,
 
       timerStatus: 0,
 
-      infos: "Tournoi du\n2 Lays Judo Chantonnay\nToutes catégories",
+      infos:
+        "Tournoi interne du\n2 Lays Judo Chantonnay\n23/12/2023\nToutes catégories",
 
       sp1name: "",
       sp1surname: "",
