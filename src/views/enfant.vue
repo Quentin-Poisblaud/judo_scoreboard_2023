@@ -29,7 +29,7 @@ export default {
       player1: {
         nom: "Combatant",
         prenom: "n° 1",
-        club: "FRA",
+        club: "2LJC",
         shido: 0, //-1 = H ; 1 à 3 = nb Shido
         score: {
           ippon: 0,
@@ -41,7 +41,7 @@ export default {
       player2: {
         nom: "Combatant",
         prenom: "n° 2",
-        club: "FRA",
+        club: "2LJC",
         shido: 0, //-1 = H ; 1 à 3 = nb Shido
         score: {
           ippon: 0,
@@ -50,11 +50,16 @@ export default {
         },
       },
 
-      timer: 300, //temps en secondes
+      timer: 180, //temps en secondes
 
       timerStatus: 0, //0=mate, 1 hajime, 2 goldenScore
 
-      infos: ["Tournoi du", "2 Lays Judo Chantonnay", "Toutes catégories"],
+      infos: [
+        "Tournoi interne du",
+        "2 Lays Judo Chantonnay",
+        "23/12/2023",
+        "Toutes catégories",
+      ],
 
       nexts: [
         {
