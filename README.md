@@ -10,9 +10,6 @@ If a window with `Merci de recharger la page` is displayed, close all scoreboard
 
 In addition to being able to modify the score, penalties and stopwatch, it is also possible to modify the name and club of the two current fighters, as well as those of the next fight. It is also possible to modify the competition information displayed.
 
-Translated with DeepL.com (free version)
-
-
 
 # To launch the project :
 
